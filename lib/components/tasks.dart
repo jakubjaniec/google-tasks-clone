@@ -58,25 +58,30 @@ class DoneTasksList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        dividerColor: Colors.transparent,
-        accentColor: Colors.black,
-      ),
-      child: ExpansionTile(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 15.0),
-          child: Text(
-            'Completed (${tasks.length})',
-            style: TextStyle(fontWeight: FontWeight.w500),
+    return Column(
+      children: [
+        Divider(),
+        Theme(
+          data: ThemeData(
+            dividerColor: Colors.transparent,
+            accentColor: Colors.black,
+          ),
+          child: ExpansionTile(
+            title: Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Text(
+                'Completed (${tasks.length})',
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+            children: tasks.map((task) {
+              var index = allTasks.indexOf(task);
+
+              return Task(task, markDone, index);
+            }).toList(),
           ),
         ),
-        children: tasks.map((task) {
-          var index = allTasks.indexOf(task);
-
-          return Task(task, markDone, index);
-        }).toList(),
-      ),
+      ],
     );
   }
 }

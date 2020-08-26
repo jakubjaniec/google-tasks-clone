@@ -32,11 +32,15 @@ class BottomBar extends StatelessWidget {
 }
 
 class AddTaskPanelButton extends StatelessWidget {
+  final Function openPanel;
+
+  AddTaskPanelButton(this.openPanel);
+
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: Colors.white,
-      onPressed: () {},
+      onPressed: openPanel,
       child: Icon(
         Icons.add,
         color: Colors.blue[600],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:Google_Task_Clone/components/tasks.dart';
 import 'package:Google_Task_Clone/components/listTitle.dart';
 import 'package:Google_Task_Clone/components/bottomBar.dart';
+import 'package:Google_Task_Clone/components/addTaskPanel.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,6 +17,8 @@ class _HomeState extends State<Home> {
     {'id': '3', 'title': 'Test3', 'done': false},
     {'id': '4', 'title': 'Test4', 'done': true},
   ];
+
+  String inputValue = '';
 
   List activeTasks = allTasks.where((task) => !task['done']).toList();
   List doneTasks = allTasks.where((task) => task['done']).toList();
@@ -34,20 +37,45 @@ class _HomeState extends State<Home> {
     updateTasks();
   }
 
+  void handleInputValue(value) {
+    setState(() {
+      inputValue = value;
+    });
+  }
+
+  void addTask() {
+    setState(() {
+      allTasks.add({'id': inputValue, 'title': inputValue, 'done': false});
+      inputValue = '';
+    });
+    Navigator.pop(context);
+    updateTasks();
+  }
+
+  void openAddTaskPanel() {
+    Navigator.of(context).push(PageRouteBuilder(
+      opaque: false,
+      pageBuilder: (_, __, ___) => AddTaskPanel(handleInputValue, addTask),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          children: [
-            ListTitle(),
-            ActiveTasksList(allTasks, activeTasks, markDone),
-            DoneTasksList(allTasks, doneTasks, markDone),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ListTitle(),
+              ActiveTasksList(allTasks, activeTasks, markDone),
+              DoneTasksList(allTasks, doneTasks, markDone),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomBar(),
-      floatingActionButton: AddTaskPanelButton(),
+      floatingActionButton: AddTaskPanelButton(openAddTaskPanel),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
