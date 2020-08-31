@@ -16,6 +16,9 @@ class _AddTaskPanelState extends State<AddTaskPanel> {
 
   PanelController _pc = PanelController();
 
+  BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,15 +30,19 @@ class _AddTaskPanelState extends State<AddTaskPanel> {
           ),
           SlidingUpPanel(
             controller: _pc,
-            minHeight: MediaQuery.of(context).size.height / 5.5,
-            maxHeight: MediaQuery.of(context).size.height / 5.5,
-            padding: EdgeInsets.only(top: 10.0, left: 15.0),
+            defaultPanelState: PanelState.OPEN,
+            onPanelClosed: () => Navigator.maybePop(context),
+            minHeight: 0,
+            maxHeight: MediaQuery.of(context).size.height / 5,
+            padding: EdgeInsets.only(left: 10.0, right: 5.0),
+            borderRadius: radius,
             panel: Container(
               color: Colors.white,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(bottom: 10.0),
+                    padding: EdgeInsets.only(left: 12.0),
                     child: TextField(
                       onChanged: (value) {
                         setState(() {
@@ -55,11 +62,15 @@ class _AddTaskPanelState extends State<AddTaskPanel> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(children: [
-                          Icon(Icons.menu, color: Colors.blue[600]),
-                          SizedBox(
-                            width: 15.0,
-                          ),
-                          Icon(Icons.calendar_today, color: Colors.blue[600])
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.sort),
+                              color: Colors.blue[600]),
+                          IconButton(
+                              padding: EdgeInsets.all(0),
+                              onPressed: () {},
+                              icon: Icon(Icons.event_available),
+                              color: Colors.blue[600])
                         ]),
                         FlatButton(
                             child: Text(
@@ -68,7 +79,7 @@ class _AddTaskPanelState extends State<AddTaskPanel> {
                                   fontWeight: FontWeight.w700, fontSize: 18),
                             ),
                             textColor: Colors.blue[600],
-                            disabledTextColor: Colors.grey,
+                            disabledTextColor: Colors.grey[400],
                             onPressed:
                                 inputValue != '' ? widget.addTask : null),
                       ],

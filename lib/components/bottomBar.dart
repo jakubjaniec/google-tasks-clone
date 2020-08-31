@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatelessWidget {
+  final Function openMenu;
+  final Function openOptions;
+
+  BottomBar(this.openMenu, this.openOptions);
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -16,13 +21,13 @@ class BottomBar extends StatelessWidget {
               iconSize: 26,
               color: Colors.grey[600],
               icon: Icon(Icons.menu),
-              onPressed: () {},
+              onPressed: openMenu,
             ),
             IconButton(
               iconSize: 26,
               color: Colors.grey[600],
               icon: Icon(Icons.more_vert),
-              onPressed: () {},
+              onPressed: openOptions,
             ),
           ],
         ),

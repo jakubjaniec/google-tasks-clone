@@ -4,6 +4,8 @@ import 'package:Google_Task_Clone/components/tasks.dart';
 import 'package:Google_Task_Clone/components/listTitle.dart';
 import 'package:Google_Task_Clone/components/bottomBar.dart';
 import 'package:Google_Task_Clone/components/addTaskPanel.dart';
+import 'package:Google_Task_Clone/components/menuPanel.dart';
+import 'package:Google_Task_Clone/components/optionsPanel.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -59,6 +61,20 @@ class _HomeState extends State<Home> {
     ));
   }
 
+  void openMenu() {
+    Navigator.of(context).push(PageRouteBuilder(
+      opaque: false,
+      pageBuilder: (_, __, ___) => MenuPanel(),
+    ));
+  }
+
+  void openOptions() {
+    Navigator.of(context).push(PageRouteBuilder(
+      opaque: false,
+      pageBuilder: (_, __, ___) => OptionsPanel(),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +90,7 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: BottomBar(openMenu, openOptions),
       floatingActionButton: AddTaskPanelButton(openAddTaskPanel),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
