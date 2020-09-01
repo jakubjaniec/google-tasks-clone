@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
   ];
 
   String inputValue = '';
+  String activeList = 'Tasks';
 
   List activeTasks = allTasks.where((task) => !task['done']).toList();
   List doneTasks = allTasks.where((task) => task['done']).toList();
@@ -64,7 +65,7 @@ class _HomeState extends State<Home> {
   void openMenu() {
     Navigator.of(context).push(PageRouteBuilder(
       opaque: false,
-      pageBuilder: (_, __, ___) => MenuPanel(),
+      pageBuilder: (_, __, ___) => MenuPanel(activeList),
     ));
   }
 
@@ -83,7 +84,7 @@ class _HomeState extends State<Home> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ListTitle(),
+              ListTitle(activeList),
               ActiveTasksList(allTasks, activeTasks, markDone),
               DoneTasksList(allTasks, doneTasks, markDone),
             ],
