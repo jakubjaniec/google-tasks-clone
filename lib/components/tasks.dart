@@ -10,34 +10,48 @@ class Task extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      child: ListTile(
-        onTap: () => Navigator.pushNamed(
-          context,
-          '/details',
-          arguments: {
-            'task': task,
-            'markDone': markDone,
-            'index': index,
-            'deleteTask': deleteTask
-          },
-        ),
-        title: Row(
-          children: [
-            IconButton(
-              icon: task['done']
-                  ? Icon(Icons.check, size: 24)
-                  : Icon(Icons.radio_button_unchecked, size: 24),
-              onPressed: () => markDone(index),
-              color: task['done'] ? Colors.blue[400] : Colors.grey,
-            ),
-            Text(task['title'],
-                style: TextStyle(
-                    decoration:
-                        task['done'] ? TextDecoration.lineThrough : null,
-                    color: Colors.black)),
-          ],
+    return Dismissible(
+      key: Key('$index'),
+      onDismissed: (direction) => markDone(index),
+      direction: !task['done'] ? DismissDirection.horizontal : null,
+      background: Container(color: Colors.blue[600]),
+      child: Card(
+        elevation: 0,
+        margin: EdgeInsets.symmetric(horizontal: 0),
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 30),
+          onTap: () => Navigator.pushNamed(
+            context,
+            '/details',
+            arguments: {
+              'task': task,
+              'markDone': markDone,
+              'index': index,
+              'deleteTask': deleteTask
+            },
+          ),
+          title: Row(
+            children: [
+              GestureDetector(
+                onTap: () => markDone(index),
+                child: Icon(
+                  task['done'] ? Icons.check : Icons.radio_button_unchecked,
+                  color: task['done'] ? Colors.blue : Colors.grey[700],
+                  size: 22,
+                ),
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Text(task['title'],
+                  style: TextStyle(
+                      fontSize: 15,
+                      decoration:
+                          task['done'] ? TextDecoration.lineThrough : null,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500)),
+            ],
+          ),
         ),
       ),
     );
@@ -83,12 +97,10 @@ class DoneTasksList extends StatelessWidget {
             accentColor: Colors.black,
           ),
           child: ExpansionTile(
-            title: Padding(
-              padding: const EdgeInsets.only(left: 15.0),
-              child: Text(
-                'Completed (${tasks.length})',
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
+            tilePadding: EdgeInsets.symmetric(horizontal: 30),
+            title: Text(
+              'Completed (${tasks.length})',
+              style: TextStyle(fontWeight: FontWeight.w700),
             ),
             children: tasks.map((task) {
               var index = allTasks.indexOf(task);

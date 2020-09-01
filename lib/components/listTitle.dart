@@ -13,7 +13,11 @@ class ListTitle extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(60.0, 15.0, 60.0, 10.0),
           child: Text(
             '$activeList',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+            style: TextStyle(
+              fontSize: 30,
+              fontFamily: 'Product Sans',
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
       ],
