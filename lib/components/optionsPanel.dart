@@ -13,7 +13,7 @@ class _OptionsPanelState extends State<OptionsPanel> {
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
 
   TextStyle mainText = TextStyle(fontSize: 15, fontWeight: FontWeight.w500);
-  TextStyle subText = TextStyle(fontSize: 12, color: Colors.grey[400]);
+  TextStyle subText = TextStyle(fontSize: 12, color: Colors.grey);
 
   @override
   Widget build(BuildContext context) {

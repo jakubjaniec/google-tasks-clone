@@ -4,15 +4,25 @@ class Task extends StatelessWidget {
   final Map task;
   final int index;
   final Function markDone;
+  final Function deleteTask;
 
-  Task(this.task, this.markDone, this.index);
+  Task(this.task, this.markDone, this.index, this.deleteTask);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
       child: ListTile(
-        onTap: () => Navigator.pushNamed(context, '/details'),
+        onTap: () => Navigator.pushNamed(
+          context,
+          '/details',
+          arguments: {
+            'task': task,
+            'markDone': markDone,
+            'index': index,
+            'deleteTask': deleteTask
+          },
+        ),
         title: Row(
           children: [
             IconButton(
@@ -22,7 +32,11 @@ class Task extends StatelessWidget {
               onPressed: () => markDone(index),
               color: task['done'] ? Colors.blue[400] : Colors.grey,
             ),
-            Text(task['title'], style: TextStyle(color: Colors.black)),
+            Text(task['title'],
+                style: TextStyle(
+                    decoration:
+                        task['done'] ? TextDecoration.lineThrough : null,
+                    color: Colors.black)),
           ],
         ),
       ),
@@ -34,8 +48,9 @@ class ActiveTasksList extends StatelessWidget {
   final List allTasks;
   final List tasks;
   final Function markDone;
+  final Function deleteTask;
 
-  ActiveTasksList(this.allTasks, this.tasks, this.markDone);
+  ActiveTasksList(this.allTasks, this.tasks, this.markDone, this.deleteTask);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +58,7 @@ class ActiveTasksList extends StatelessWidget {
       children: tasks.map((task) {
         var index = allTasks.indexOf(task);
 
-        return Task(task, markDone, index);
+        return Task(task, markDone, index, deleteTask);
       }).toList(),
     );
   }
@@ -53,8 +68,9 @@ class DoneTasksList extends StatelessWidget {
   final List allTasks;
   final List tasks;
   final Function markDone;
+  final Function deleteTask;
 
-  DoneTasksList(this.allTasks, this.tasks, this.markDone);
+  DoneTasksList(this.allTasks, this.tasks, this.markDone, this.deleteTask);
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +93,7 @@ class DoneTasksList extends StatelessWidget {
             children: tasks.map((task) {
               var index = allTasks.indexOf(task);
 
-              return Task(task, markDone, index);
+              return Task(task, markDone, index, deleteTask);
             }).toList(),
           ),
         ),

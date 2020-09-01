@@ -33,11 +33,26 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void markDone(index) {
+  void markDone(index, [route]) {
     setState(() {
       allTasks[index]['done'] = !allTasks[index]['done'];
     });
     updateTasks();
+
+    if (route == 'details') {
+      Navigator.pop(context);
+    }
+  }
+
+  void deleteTask(index, [route]) {
+    setState(() {
+      allTasks.removeAt(index);
+    });
+    updateTasks();
+
+    if (route == 'details') {
+      Navigator.pop(context);
+    }
   }
 
   void handleInputValue(value) {
@@ -85,8 +100,8 @@ class _HomeState extends State<Home> {
           child: Column(
             children: [
               ListTitle(activeList),
-              ActiveTasksList(allTasks, activeTasks, markDone),
-              DoneTasksList(allTasks, doneTasks, markDone),
+              ActiveTasksList(allTasks, activeTasks, markDone, deleteTask),
+              DoneTasksList(allTasks, doneTasks, markDone, deleteTask),
             ],
           ),
         ),
