@@ -43,26 +43,7 @@ class Details extends StatelessWidget {
                 color: Colors.blue[800],
               )
             ]),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.0),
-              child: Text("${task['title']}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 26,
-                      decoration:
-                          task['done'] ? TextDecoration.lineThrough : null)),
-            ),
-            !task['done']
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Button('Add details', Icon(Icons.sort)),
-                      Button('Add date/hour', Icon(Icons.event_available)),
-                      Button(
-                          'Add subtasks', Icon(Icons.subdirectory_arrow_right)),
-                    ],
-                  )
-                : Container(),
+            task['done'] ? DoneTaskDetails(task) : ActiveTaskDetails(task),
           ],
         ),
       ),
@@ -93,6 +74,55 @@ class Button extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DoneTaskDetails extends StatelessWidget {
+  final Map task;
+
+  DoneTaskDetails(this.task);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 15.0),
+      child: Text("${task['title']}",
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 26,
+              decoration: TextDecoration.lineThrough)),
+    );
+  }
+}
+
+class ActiveTaskDetails extends StatelessWidget {
+  final Map task;
+
+  ActiveTaskDetails(this.task);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 15.0),
+          child: Text("${task['title']}",
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 26,
+              )),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Button('Add details', Icon(Icons.sort)),
+            Button('Add date/hour', Icon(Icons.event_available)),
+            Button('Add subtasks', Icon(Icons.subdirectory_arrow_right)),
+          ],
+        )
+      ],
     );
   }
 }

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class OptionsPanel extends StatefulWidget {
-  @override
-  _OptionsPanelState createState() => _OptionsPanelState();
-}
+class OptionsPanel extends StatelessWidget {
+  final PanelController _pc = PanelController();
+  final Function deleteDoneTasks;
 
-class _OptionsPanelState extends State<OptionsPanel> {
-  PanelController _pc = PanelController();
+  OptionsPanel(this.deleteDoneTasks);
 
-  BorderRadiusGeometry radius = BorderRadius.only(
+  final BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
 
-  TextStyle mainText = TextStyle(fontSize: 15, fontWeight: FontWeight.w500);
-  TextStyle subText = TextStyle(fontSize: 12, color: Colors.grey);
+  final TextStyle mainText =
+      TextStyle(fontSize: 15, fontWeight: FontWeight.w500);
+  final TextStyle subText = TextStyle(fontSize: 12, color: Colors.grey);
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +55,12 @@ class _OptionsPanelState extends State<OptionsPanel> {
                     Container(
                         margin: EdgeInsets.symmetric(vertical: 30),
                         child: Text('Delete list', style: mainText)),
-                    Container(
-                        child: Text('Delete all done tasks', style: mainText)),
+                    InkWell(
+                      onTap: deleteDoneTasks,
+                      child: Container(
+                          child:
+                              Text('Delete all done tasks', style: mainText)),
+                    ),
                   ],
                 ),
               ),

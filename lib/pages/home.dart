@@ -34,14 +34,15 @@ class _HomeState extends State<Home> {
   }
 
   void markDone(index, [route]) {
+    route == 'details' && !allTasks[index]['done']
+        ? Navigator.pop(context)
+        : Container();
+
     setState(() {
       allTasks[index]['done'] = !allTasks[index]['done'];
     });
-    updateTasks();
 
-    if (route == 'details') {
-      Navigator.pop(context);
-    }
+    updateTasks();
   }
 
   void deleteTask(index, [route]) {
@@ -53,6 +54,14 @@ class _HomeState extends State<Home> {
     if (route == 'details') {
       Navigator.pop(context);
     }
+  }
+
+  void deleteDoneTasks() {
+    setState(() {
+      allTasks.removeWhere((task) => task['done']);
+    });
+    updateTasks();
+    Navigator.pop(context);
   }
 
   void handleInputValue(value) {
@@ -87,7 +96,7 @@ class _HomeState extends State<Home> {
   void openOptions() {
     Navigator.of(context).push(PageRouteBuilder(
       opaque: false,
-      pageBuilder: (_, __, ___) => OptionsPanel(),
+      pageBuilder: (_, __, ___) => OptionsPanel(deleteDoneTasks),
     ));
   }
 
