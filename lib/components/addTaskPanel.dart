@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class AddTaskPanel extends StatefulWidget {
-  final Function handleInputValue;
-  final Function addTask;
+import 'package:Google_Task_Clone/models.dart';
+import 'package:provider/provider.dart';
 
-  AddTaskPanel(this.handleInputValue, this.addTask);
+class AddTaskPanel extends StatelessWidget {
+  final PanelController _pc = PanelController();
 
-  @override
-  _AddTaskPanelState createState() => _AddTaskPanelState();
-}
-
-class _AddTaskPanelState extends State<AddTaskPanel> {
-  String inputValue = '';
-
-  PanelController _pc = PanelController();
-
-  BorderRadiusGeometry radius = BorderRadius.only(
+  final BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
 
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
+
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.4),
       body: SlidingUpPanel(
@@ -41,12 +34,7 @@ class _AddTaskPanelState extends State<AddTaskPanel> {
               Container(
                 padding: EdgeInsets.only(left: 12.0),
                 child: TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      inputValue = value;
-                    });
-                    widget.handleInputValue(value);
-                  },
+                  onChanged: (value) => state.handleInputValueChange(value),
                   maxLines: null,
                   style: TextStyle(fontWeight: FontWeight.w500),
                   autofocus: true,
@@ -77,7 +65,9 @@ class _AddTaskPanelState extends State<AddTaskPanel> {
                         ),
                         textColor: Colors.blue[600],
                         disabledTextColor: Colors.grey[400],
-                        onPressed: inputValue != '' ? widget.addTask : null),
+                        onPressed: state.inputValue != ''
+                            ? () => state.addTask(context)
+                            : null),
                   ],
                 ),
               )

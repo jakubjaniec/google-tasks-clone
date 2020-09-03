@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
+import 'package:Google_Task_Clone/models.dart';
+import 'package:provider/provider.dart';
+
 class Task extends StatelessWidget {
   final Map task;
   final int index;
-  final Function markDone;
-  final Function deleteTask;
 
-  Task(this.task, this.markDone, this.index, this.deleteTask);
+  Task(this.task, this.index);
 
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
+
     return Dismissible(
       key: Key('$index'),
-      onDismissed: (direction) => markDone(index),
+      onDismissed: (direction) => state.markDone(index),
       direction: !task['done'] ? DismissDirection.horizontal : null,
       background: Container(color: Colors.blue[600]),
       child: Card(
@@ -25,15 +28,13 @@ class Task extends StatelessWidget {
             '/details',
             arguments: {
               'task': task,
-              'markDone': markDone,
               'index': index,
-              'deleteTask': deleteTask
             },
           ),
           title: Row(
             children: [
               GestureDetector(
-                onTap: () => markDone(index),
+                onTap: () => state.markDone(index),
                 child: Icon(
                   task['done'] ? Icons.check : Icons.radio_button_unchecked,
                   color: task['done'] ? Colors.blue : Colors.grey[700],
@@ -59,35 +60,24 @@ class Task extends StatelessWidget {
 }
 
 class ActiveTasksList extends StatelessWidget {
-  final List allTasks;
-  final List tasks;
-  final Function markDone;
-  final Function deleteTask;
-
-  ActiveTasksList(this.allTasks, this.tasks, this.markDone, this.deleteTask);
-
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
     return Column(
-      children: tasks.map((task) {
-        var index = allTasks.indexOf(task);
+      children: state.activeTasks.map<Widget>((task) {
+        var index = state.allTasks.indexOf(task);
 
-        return Task(task, markDone, index, deleteTask);
+        return Task(task, index);
       }).toList(),
     );
   }
 }
 
 class DoneTasksList extends StatelessWidget {
-  final List allTasks;
-  final List tasks;
-  final Function markDone;
-  final Function deleteTask;
-
-  DoneTasksList(this.allTasks, this.tasks, this.markDone, this.deleteTask);
-
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
+
     return Column(
       children: [
         Divider(),
@@ -99,13 +89,13 @@ class DoneTasksList extends StatelessWidget {
           child: ExpansionTile(
             tilePadding: EdgeInsets.symmetric(horizontal: 30),
             title: Text(
-              'Completed (${tasks.length})',
+              'Completed (${state.doneTasks.length})',
               style: TextStyle(fontWeight: FontWeight.w700),
             ),
-            children: tasks.map((task) {
-              var index = allTasks.indexOf(task);
+            children: state.doneTasks.map<Widget>((task) {
+              var index = state.allTasks.indexOf(task);
 
-              return Task(task, markDone, index, deleteTask);
+              return Task(task, index);
             }).toList(),
           ),
         ),

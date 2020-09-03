@@ -14,7 +14,6 @@ class MenuPanel extends StatefulWidget {
 
 class _MenuPanelState extends State<MenuPanel> {
   PanelController _pc = PanelController();
-
   BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
 

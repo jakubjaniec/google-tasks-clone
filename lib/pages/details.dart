@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:Google_Task_Clone/models.dart';
 
 class Details extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map args = ModalRoute.of(context).settings.arguments as Map;
     Map task = args['task'];
-    Function markDone = args['markDone'];
-    Function deleteTask = args['deleteTask'];
-
+    var state = Provider.of<TaskModel>(context, listen: true);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -16,11 +16,13 @@ class Details extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.grey[700]),
         actions: [
           IconButton(
-            onPressed: () => markDone(args['index'], 'details'),
+            onPressed: () => state.markDone(args['index'], context, 'details'),
             icon: task['done'] ? Icon(Icons.undo) : Icon(Icons.check),
           ),
           IconButton(
-            onPressed: () => deleteTask(args['index'], 'details'),
+            onPressed: () => state.deleteTask(
+              args['index'],
+            ),
             icon: Icon(Icons.delete),
           )
         ],

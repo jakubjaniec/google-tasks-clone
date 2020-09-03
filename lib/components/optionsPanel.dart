@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import 'package:Google_Task_Clone/models.dart';
+import 'package:provider/provider.dart';
+
 class OptionsPanel extends StatelessWidget {
   final PanelController _pc = PanelController();
-  final Function deleteDoneTasks;
-
-  OptionsPanel(this.deleteDoneTasks);
 
   final BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
@@ -16,6 +16,8 @@ class OptionsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
+
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.4),
       body: SlidingUpPanel(
@@ -26,6 +28,7 @@ class OptionsPanel extends StatelessWidget {
         maxHeight: MediaQuery.of(context).size.height / 2,
         backdropTapClosesPanel: true,
         backdropEnabled: true,
+        snapPoint: 0.5,
         borderRadius: radius,
         panel: Container(
           color: Colors.white,
@@ -56,7 +59,7 @@ class OptionsPanel extends StatelessWidget {
                         margin: EdgeInsets.symmetric(vertical: 30),
                         child: Text('Delete list', style: mainText)),
                     InkWell(
-                      onTap: deleteDoneTasks,
+                      onTap: () => state.deleteDoneTasks(context),
                       child: Container(
                           child:
                               Text('Delete all done tasks', style: mainText)),

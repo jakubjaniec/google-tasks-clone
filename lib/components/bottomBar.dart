@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+import 'package:Google_Task_Clone/models.dart';
+
 class BottomBar extends StatelessWidget {
-  final Function openMenu;
-  final Function openOptions;
-
-  BottomBar(this.openMenu, this.openOptions);
-
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
+
     return BottomAppBar(
       elevation: 20.0,
       shape: CircularNotchedRectangle(),
@@ -21,13 +21,13 @@ class BottomBar extends StatelessWidget {
               iconSize: 26,
               color: Colors.grey[600],
               icon: Icon(Icons.menu),
-              onPressed: openMenu,
+              onPressed: () => state.openMenu(context),
             ),
             IconButton(
               iconSize: 26,
               color: Colors.grey[600],
               icon: Icon(Icons.more_vert),
-              onPressed: openOptions,
+              onPressed: () => state.openOptions(context),
             ),
           ],
         ),
@@ -37,15 +37,13 @@ class BottomBar extends StatelessWidget {
 }
 
 class AddTaskPanelButton extends StatelessWidget {
-  final Function openPanel;
-
-  AddTaskPanelButton(this.openPanel);
-
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
+
     return FloatingActionButton(
       backgroundColor: Colors.white,
-      onPressed: openPanel,
+      onPressed: () => state.openAddTaskPanel(context),
       child: Icon(
         Icons.add,
         color: Colors.blue[600],
