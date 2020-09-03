@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class MenuPanel extends StatefulWidget {
+class MenuPanel extends StatelessWidget {
   final listTitles = ['Tasks', 'Shopping'];
 
   final String activeList;
-
   MenuPanel(this.activeList);
 
-  @override
-  _MenuPanelState createState() => _MenuPanelState();
-}
-
-class _MenuPanelState extends State<MenuPanel> {
-  PanelController _pc = PanelController();
-  BorderRadiusGeometry radius = BorderRadius.only(
+  final PanelController _pc = PanelController();
+  final BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
+
+  void openPanel() {
+    Timer(Duration(milliseconds: 1), () {
+      _pc.open();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    openPanel();
+
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.4),
       body: SlidingUpPanel(
         controller: _pc,
-        defaultPanelState: PanelState.OPEN,
+        defaultPanelState: PanelState.CLOSED,
         onPanelClosed: () => Navigator.maybePop(context),
         minHeight: 0,
         maxHeight: MediaQuery.of(context).size.height / 2,
@@ -65,16 +68,16 @@ class _MenuPanelState extends State<MenuPanel> {
               padding: EdgeInsets.only(top: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: widget.listTitles.map((list) {
+                children: listTitles.map((list) {
                   return Container(
                     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                    color: list == widget.activeList
+                    color: list == activeList
                         ? Colors.lightBlue[50]
                         : Colors.white,
                     child: Text(
                       list,
                       style: TextStyle(
-                          color: list == widget.activeList
+                          color: list == activeList
                               ? Colors.blue[800]
                               : Colors.black,
                           fontWeight: FontWeight.w700,

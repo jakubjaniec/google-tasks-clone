@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'package:Google_Task_Clone/models.dart';
@@ -14,24 +15,30 @@ class OptionsPanel extends StatelessWidget {
       TextStyle(fontSize: 15, fontWeight: FontWeight.w500);
   final TextStyle subText = TextStyle(fontSize: 12, color: Colors.grey);
 
+  void openPanel() {
+    Timer(Duration(milliseconds: 1), () {
+      _pc.open();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var state = Provider.of<TaskModel>(context, listen: true);
+    openPanel();
 
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.4),
       body: SlidingUpPanel(
         controller: _pc,
-        defaultPanelState: PanelState.OPEN,
+        defaultPanelState: PanelState.CLOSED,
         onPanelClosed: () => Navigator.maybePop(context),
         minHeight: 0,
         maxHeight: MediaQuery.of(context).size.height / 2,
         backdropTapClosesPanel: true,
         backdropEnabled: true,
-        snapPoint: 0.5,
         borderRadius: radius,
+        color: Colors.white,
         panel: Container(
-          color: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,

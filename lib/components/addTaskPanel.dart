@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'package:Google_Task_Clone/models.dart';
@@ -10,9 +11,16 @@ class AddTaskPanel extends StatelessWidget {
   final BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
 
+  void openPanel() {
+    Timer(Duration(milliseconds: 1), () {
+      _pc.open();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var state = Provider.of<TaskModel>(context, listen: true);
+    openPanel();
 
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.4),
