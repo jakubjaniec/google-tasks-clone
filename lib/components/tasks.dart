@@ -78,28 +78,30 @@ class DoneTasksList extends StatelessWidget {
   Widget build(BuildContext context) {
     var state = Provider.of<TaskModel>(context, listen: true);
 
-    return Column(
-      children: [
-        Divider(),
-        Theme(
-          data: ThemeData(
-            dividerColor: Colors.transparent,
-            accentColor: Colors.black,
-          ),
-          child: ExpansionTile(
-            tilePadding: EdgeInsets.symmetric(horizontal: 30),
-            title: Text(
-              'Completed (${state.doneTasks.length})',
-              style: TextStyle(fontWeight: FontWeight.w700),
-            ),
-            children: state.doneTasks.map<Widget>((task) {
-              var index = state.allTasks.indexOf(task);
+    return state.doneTasks.length > 0
+        ? Column(
+            children: [
+              Divider(),
+              Theme(
+                data: ThemeData(
+                  dividerColor: Colors.transparent,
+                  accentColor: Colors.black,
+                ),
+                child: ExpansionTile(
+                  tilePadding: EdgeInsets.symmetric(horizontal: 30),
+                  title: Text(
+                    'Completed (${state.doneTasks.length})',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  children: state.doneTasks.map<Widget>((task) {
+                    var index = state.allTasks.indexOf(task);
 
-              return Task(task, index);
-            }).toList(),
-          ),
-        ),
-      ],
-    );
+                    return Task(task, index);
+                  }).toList(),
+                ),
+              ),
+            ],
+          )
+        : Container();
   }
 }

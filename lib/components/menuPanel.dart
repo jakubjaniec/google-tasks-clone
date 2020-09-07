@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:provider/provider.dart';
+import 'package:Google_Task_Clone/models.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MenuPanel extends StatelessWidget {
-  final listTitles = ['Tasks', 'Shopping'];
-
   final String activeList;
+
   MenuPanel(this.activeList);
 
   final PanelController _pc = PanelController();
   final BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
 
-  void openPanel() {
+  void openPanel(context, state) {
+    var height = MediaQuery.of(context).size.height;
+    state.maxHeightPicker(height);
     Timer(Duration(milliseconds: 1), () {
       _pc.open();
     });
@@ -20,7 +23,8 @@ class MenuPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    openPanel();
+    var state = Provider.of<TaskModel>(context, listen: true);
+    openPanel(context, state);
 
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.4),
@@ -29,7 +33,7 @@ class MenuPanel extends StatelessWidget {
         defaultPanelState: PanelState.CLOSED,
         onPanelClosed: () => Navigator.maybePop(context),
         minHeight: 0,
-        maxHeight: MediaQuery.of(context).size.height / 2,
+        maxHeight: state.maxHeight,
         backdropTapClosesPanel: true,
         backdropEnabled: true,
         borderRadius: radius,
@@ -65,10 +69,10 @@ class MenuPanel extends StatelessWidget {
             ),
             Divider(color: Colors.grey[400]),
             Padding(
-              padding: EdgeInsets.only(top: 10.0),
+              padding: EdgeInsets.only(top: 0.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: listTitles.map((list) {
+                children: state.listTitles.map((list) {
                   return Container(
                     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                     color: list == activeList

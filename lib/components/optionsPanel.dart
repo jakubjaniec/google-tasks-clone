@@ -15,7 +15,7 @@ class OptionsPanel extends StatelessWidget {
       TextStyle(fontSize: 15, fontWeight: FontWeight.w500);
   final TextStyle subText = TextStyle(fontSize: 12, color: Colors.grey);
 
-  void openPanel() {
+  void openPanel() async {
     Timer(Duration(milliseconds: 1), () {
       _pc.open();
     });

@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:Google_Task_Clone/models.dart';
 
 import 'package:Google_Task_Clone/components/tasks.dart';
 import 'package:Google_Task_Clone/components/listTitle.dart';
 import 'package:Google_Task_Clone/components/bottomBar.dart';
 
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  String activeList = 'Tasks';
-
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
+    state.getData();
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ListTitle(activeList),
-              ActiveTasksList(),
-              DoneTasksList(),
-            ],
-          ),
-        ),
-      ),
+      body: state.tasks != null
+          ? SafeArea(
+              child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  ListTitle('Tasks'),
+                  ActiveTasksList(),
+                  DoneTasksList(),
+                ],
+              ),
+            ))
+          : Container(),
       bottomNavigationBar: BottomBar(),
       floatingActionButton: AddTaskPanelButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

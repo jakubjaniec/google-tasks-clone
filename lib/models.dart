@@ -1,38 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 
 import 'package:Google_Task_Clone/components/addTaskPanel.dart';
 import 'package:Google_Task_Clone/components/menuPanel.dart';
 import 'package:Google_Task_Clone/components/optionsPanel.dart';
 
 class TaskModel extends ChangeNotifier {
+  final LocalStorage storage = LocalStorage('tasks');
+
+  List tasks;
+  void getData() async {
+    await storage.ready;
+    storage.clear();
+
+    if (tasks != null) return;
+
+    if (storage.getItem('1') != null)
+      tasks = storage.getItem('1');
+    else
+      tasks = [];
+
+    notifyListeners();
+  }
+
+  get allTasks => tasks;
+  get activeTasks => tasks.where((task) => !task['done']);
+  get doneTasks => tasks.where((task) => task['done']);
+
+  var maxHeight;
+  var listTitles = ['Tasks', 'Shopping'];
   String inputValue = '';
-  List _tasks = [
-    {'id': '1', 'title': 'Test1', 'done': false},
-    {'id': '2', 'title': 'Test2', 'done': false},
-    {'id': '3', 'title': 'Test3', 'done': false},
-    {'id': '4', 'title': 'Test4', 'done': true},
-  ];
-  get allTasks => _tasks;
-  get activeTasks => _tasks.where((task) => !task['done']);
-  get doneTasks => _tasks.where((task) => task['done']);
 
   void addTask(context) {
-    _tasks.add({'id': inputValue, 'title': inputValue, 'done': false});
+    tasks.add({'id': inputValue, 'title': inputValue, 'done': false});
+    storage.setItem('1', tasks);
     inputValue = '';
     Navigator.pop(context);
     notifyListeners();
   }
 
   void markDone(index, [context, route]) {
-    _tasks[index]['done'] = !_tasks[index]['done'];
+    tasks[index]['done'] = !tasks[index]['done'];
+    storage.setItem('1', tasks);
 
-    if (route == 'details' && _tasks[index]['done']) Navigator.pop(context);
-
+    if (route == 'details' && tasks[index]['done']) Navigator.pop(context);
     notifyListeners();
   }
 
   void deleteTask(index) {
-    _tasks.removeAt(index);
+    tasks.removeAt(index);
+    storage.setItem('1', tasks);
     notifyListeners();
   }
 
@@ -42,7 +59,8 @@ class TaskModel extends ChangeNotifier {
   }
 
   void deleteDoneTasks(context) {
-    _tasks.removeWhere((task) => task['done']);
+    tasks.removeWhere((task) => task['done']);
+    storage.setItem('1', tasks);
     Navigator.pop(context);
     notifyListeners();
   }
@@ -66,5 +84,28 @@ class TaskModel extends ChangeNotifier {
       opaque: false,
       pageBuilder: (_, __, ___) => OptionsPanel(),
     ));
+  }
+
+  void maxHeightPicker(height) {
+    switch (listTitles.length) {
+      case 1:
+        maxHeight = height / 2.5;
+        break;
+      case 2:
+        maxHeight = height / 2.1;
+        break;
+      case 3:
+        maxHeight = height / 1.8;
+        break;
+      case 4:
+        maxHeight = height / 1.6;
+        break;
+      case 5:
+        maxHeight = height / 1.4;
+        break;
+      default:
+        maxHeight = height;
+        break;
+    }
   }
 }
