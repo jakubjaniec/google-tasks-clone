@@ -9,6 +9,7 @@ class Details extends StatelessWidget {
     Map task = args['task'];
     var state = Provider.of<TaskModel>(context, listen: true);
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -45,35 +46,10 @@ class Details extends StatelessWidget {
                 color: Colors.blue[800],
               )
             ]),
-            task['done'] ? DoneTaskDetails(task) : ActiveTaskDetails(task),
+            task['done']
+                ? DoneTaskDetails(task)
+                : ActiveTaskDetails(task, args['index']),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class Button extends StatelessWidget {
-  final String btnText;
-  final Icon icon;
-
-  Button(this.btnText, this.icon);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 7.0),
-      child: FlatButton.icon(
-        textColor: Colors.grey[700],
-        padding: EdgeInsets.zero,
-        onPressed: () {},
-        icon: icon,
-        label: Padding(
-          padding: EdgeInsets.only(left: 10.0),
-          child: Text(
-            '$btnText',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-          ),
         ),
       ),
     );
@@ -100,8 +76,9 @@ class DoneTaskDetails extends StatelessWidget {
 
 class ActiveTaskDetails extends StatelessWidget {
   final Map task;
+  final int index;
 
-  ActiveTaskDetails(this.task);
+  ActiveTaskDetails(this.task, this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -119,12 +96,65 @@ class ActiveTaskDetails extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Button('Add details', Icon(Icons.sort)),
-            Button('Add date/hour', Icon(Icons.event_available)),
-            Button('Add subtasks', Icon(Icons.subdirectory_arrow_right)),
+            Button(
+                'Add details', Icons.sort, 'details', index, task['details']),
+            Button('Add date/hour', Icons.event_available, 'date'),
+            Button('Add subtasks', Icons.subdirectory_arrow_right, 'subtasks'),
           ],
         )
       ],
     );
+  }
+}
+
+class Button extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final String type;
+  final int index;
+  final String details;
+
+  Button(this.label, this.icon, this.type, [this.index, this.details]);
+
+  @override
+  Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
+
+    return Padding(
+        padding: EdgeInsets.symmetric(vertical: 7.0),
+        child: Row(
+          children: [
+            Icon(icon, color: Colors.grey[700]),
+            type == 'details'
+                ? Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 15.0),
+                      child: TextFormField(
+                        onChanged: (value) => state.addDetails(index, value),
+                        style: TextStyle(color: Colors.black),
+                        initialValue: details != '' ? '$details' : null,
+                        decoration: InputDecoration(
+                            hintText: '$label',
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                                color: Colors.grey[700])),
+                      ),
+                    ),
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(left: 10.0),
+                    child: FlatButton(
+                      textColor: Colors.grey[700],
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      onPressed: () {},
+                      child: Text('$label',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500)),
+                    ),
+                  ),
+          ],
+        ));
   }
 }

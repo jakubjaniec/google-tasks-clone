@@ -12,8 +12,8 @@ class OptionsPanel extends StatelessWidget {
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
 
   final TextStyle mainText =
-      TextStyle(fontSize: 15, fontWeight: FontWeight.w500);
-  final TextStyle subText = TextStyle(fontSize: 12, color: Colors.grey);
+      TextStyle(fontSize: 14, fontWeight: FontWeight.w500);
+  final TextStyle subText = TextStyle(fontSize: 11, color: Colors.grey);
 
   void openPanel() async {
     Timer(Duration(milliseconds: 1), () {
@@ -59,17 +59,15 @@ class OptionsPanel extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                        child:
-                            Text('Change name of the list', style: mainText)),
+                    Container(child: Text('Rename list', style: mainText)),
                     Container(
                         margin: EdgeInsets.symmetric(vertical: 30),
                         child: Text('Delete list', style: mainText)),
                     InkWell(
                       onTap: () => state.deleteDoneTasks(context),
                       child: Container(
-                          child:
-                              Text('Delete all done tasks', style: mainText)),
+                          child: Text('Delete all completed tasks',
+                              style: mainText)),
                     ),
                   ],
                 ),

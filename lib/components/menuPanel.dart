@@ -115,7 +115,7 @@ class MenuPanel extends StatelessWidget {
                     children: [
                       Icon(Icons.feedback, size: 20),
                       SizedBox(width: 10.0),
-                      Text('Help and opinions',
+                      Text('Help and feedback',
                           style: TextStyle(
                               fontSize: 16.0, fontWeight: FontWeight.w500)),
                     ],

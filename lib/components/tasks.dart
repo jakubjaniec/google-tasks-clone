@@ -9,6 +9,11 @@ class Task extends StatelessWidget {
 
   Task(this.task, this.index);
 
+  final EdgeInsets contentPaddingDetails =
+      EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0);
+  final EdgeInsets contentPaddingNoDetails =
+      EdgeInsets.symmetric(horizontal: 30.0, vertical: 0.0);
+
   @override
   Widget build(BuildContext context) {
     var state = Provider.of<TaskModel>(context, listen: true);
@@ -22,7 +27,9 @@ class Task extends StatelessWidget {
         elevation: 0,
         margin: EdgeInsets.symmetric(horizontal: 0),
         child: ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 30),
+          contentPadding: task['details'] != ''
+              ? contentPaddingDetails
+              : contentPaddingNoDetails,
           onTap: () => Navigator.pushNamed(
             context,
             '/details',
@@ -38,19 +45,32 @@ class Task extends StatelessWidget {
                 child: Icon(
                   task['done'] ? Icons.check : Icons.radio_button_unchecked,
                   color: task['done'] ? Colors.blue : Colors.grey[700],
-                  size: 22,
+                  size: 23,
                 ),
               ),
               SizedBox(
                 width: 15,
               ),
-              Text(task['title'],
-                  style: TextStyle(
-                      fontSize: 15,
-                      decoration:
-                          task['done'] ? TextDecoration.lineThrough : null,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(task['title'],
+                      style: TextStyle(
+                          fontSize: 15,
+                          decoration:
+                              task['done'] ? TextDecoration.lineThrough : null,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500)),
+                  task['details'] != '' ? SizedBox(height: 5.0) : Container(),
+                  task['details'] != ''
+                      ? Text(task['details'],
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey,
+                          ))
+                      : Container(),
+                ],
+              ),
             ],
           ),
         ),

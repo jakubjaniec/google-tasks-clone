@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: state.tasks != null
+      body: state.allTasks != null
           ? SafeArea(
               child: SingleChildScrollView(
               child: Column(

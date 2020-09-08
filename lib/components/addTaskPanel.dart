@@ -73,7 +73,7 @@ class AddTaskPanel extends StatelessWidget {
                         ),
                         textColor: Colors.blue[600],
                         disabledTextColor: Colors.grey[400],
-                        onPressed: state.inputValue != ''
+                        onPressed: state.taskTitle != ''
                             ? () => state.addTask(context)
                             : null),
                   ],
