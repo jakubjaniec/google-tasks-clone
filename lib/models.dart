@@ -6,7 +6,7 @@ import 'package:Google_Task_Clone/components/menuPanel.dart';
 import 'package:Google_Task_Clone/components/optionsPanel.dart';
 
 class TaskModel extends ChangeNotifier {
-  final LocalStorage storage = LocalStorage('_tasks');
+  final LocalStorage storage = LocalStorage('tasks');
 
   List _tasks;
 
@@ -27,10 +27,8 @@ class TaskModel extends ChangeNotifier {
   get activeTasks => _tasks.where((task) => !task['done']);
   get doneTasks => _tasks.where((task) => task['done']);
 
-  var maxHeight;
-  var listTitles = ['Tasks', 'Shopping'];
+  List listTitles = ['Tasks', 'Shopping'];
   String taskTitle = '';
-  String taskDetails = '';
 
   void addTask(context) {
     _tasks.add(
@@ -42,7 +40,13 @@ class TaskModel extends ChangeNotifier {
   }
 
   void addDetails(index, value) {
-    _tasks[index]['details'] = value;
+    _tasks[index]['details'] = value.toString();
+    storage.setItem('1', _tasks);
+    notifyListeners();
+  }
+
+  void editTaskTitle(index, value) {
+    _tasks[index]['title'] = value.toString();
     storage.setItem('1', _tasks);
     notifyListeners();
   }
@@ -55,9 +59,10 @@ class TaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTask(index) {
+  void deleteTask(context, index) {
     _tasks.removeAt(index);
     storage.setItem('1', _tasks);
+    Navigator.pop(context);
     notifyListeners();
   }
 
@@ -83,7 +88,7 @@ class TaskModel extends ChangeNotifier {
   void openMenu(context) {
     Navigator.of(context).push(PageRouteBuilder(
       opaque: false,
-      pageBuilder: (_, __, ___) => MenuPanel('_tasks'),
+      pageBuilder: (_, __, ___) => MenuPanel(),
     ));
   }
 
@@ -92,28 +97,5 @@ class TaskModel extends ChangeNotifier {
       opaque: false,
       pageBuilder: (_, __, ___) => OptionsPanel(),
     ));
-  }
-
-  void maxHeightPicker(height) {
-    switch (listTitles.length) {
-      case 1:
-        maxHeight = height / 2.5;
-        break;
-      case 2:
-        maxHeight = height / 2.1;
-        break;
-      case 3:
-        maxHeight = height / 1.8;
-        break;
-      case 4:
-        maxHeight = height / 1.6;
-        break;
-      case 5:
-        maxHeight = height / 1.4;
-        break;
-      default:
-        maxHeight = height;
-        break;
-    }
   }
 }

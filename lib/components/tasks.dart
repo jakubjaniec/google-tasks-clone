@@ -54,7 +54,7 @@ class Task extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(task['title'],
+                  Text(task['title'].toString(),
                       style: TextStyle(
                           fontSize: 15,
                           decoration:
@@ -83,13 +83,15 @@ class ActiveTasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var state = Provider.of<TaskModel>(context, listen: true);
-    return Column(
-      children: state.activeTasks.map<Widget>((task) {
-        var index = state.allTasks.indexOf(task);
+    return state.activeTasks.length > 0
+        ? Column(
+            children: state.activeTasks.map<Widget>((task) {
+              var index = state.allTasks.indexOf(task);
 
-        return Task(task, index);
-      }).toList(),
-    );
+              return Task(task, index);
+            }).toList(),
+          )
+        : Container();
   }
 }
 

@@ -5,17 +5,13 @@ import 'package:Google_Task_Clone/models.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MenuPanel extends StatelessWidget {
-  final String activeList;
-
-  MenuPanel(this.activeList);
+  final String activeList = 'Tasks';
 
   final PanelController _pc = PanelController();
   final BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
 
-  void openPanel(context, state) {
-    var height = MediaQuery.of(context).size.height;
-    state.maxHeightPicker(height);
+  void openPanel(state) {
     Timer(Duration(milliseconds: 1), () {
       _pc.open();
     });
@@ -24,7 +20,7 @@ class MenuPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var state = Provider.of<TaskModel>(context, listen: true);
-    openPanel(context, state);
+    openPanel(state);
 
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.4),
@@ -33,7 +29,7 @@ class MenuPanel extends StatelessWidget {
         defaultPanelState: PanelState.CLOSED,
         onPanelClosed: () => Navigator.maybePop(context),
         minHeight: 0,
-        maxHeight: state.maxHeight,
+        maxHeight: MediaQuery.of(context).size.height / 2.1,
         backdropTapClosesPanel: true,
         backdropEnabled: true,
         borderRadius: radius,
@@ -73,17 +69,16 @@ class MenuPanel extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: state.listTitles.map((list) {
+                  print(list);
                   return Container(
                     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                    color: list == activeList
-                        ? Colors.lightBlue[50]
-                        : Colors.white,
+                    color:
+                        list == 'Tasks' ? Colors.lightBlue[50] : Colors.white,
                     child: Text(
                       list,
                       style: TextStyle(
-                          color: list == activeList
-                              ? Colors.blue[800]
-                              : Colors.black,
+                          color:
+                              list == 'Tasks' ? Colors.blue[800] : Colors.black,
                           fontWeight: FontWeight.w700,
                           fontSize: 16.0),
                     ),

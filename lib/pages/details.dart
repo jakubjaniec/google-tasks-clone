@@ -5,9 +5,10 @@ import 'package:Google_Task_Clone/models.dart';
 class Details extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
     final Map args = ModalRoute.of(context).settings.arguments as Map;
     Map task = args['task'];
-    var state = Provider.of<TaskModel>(context, listen: true);
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
@@ -21,9 +22,7 @@ class Details extends StatelessWidget {
             icon: task['done'] ? Icon(Icons.undo) : Icon(Icons.check),
           ),
           IconButton(
-            onPressed: () => state.deleteTask(
-              args['index'],
-            ),
+            onPressed: () => state.deleteTask(context, args['index']),
             icon: Icon(Icons.delete),
           )
         ],
@@ -82,16 +81,19 @@ class ActiveTaskDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: EdgeInsets.symmetric(vertical: 15.0),
-          child: Text("${task['title']}",
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 26,
-              )),
+          child: TextFormField(
+            onChanged: (value) => state.editTaskTitle(index, value),
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500),
+            initialValue: task['title'],
+            decoration: InputDecoration(border: InputBorder.none),
+          ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
