@@ -69,7 +69,6 @@ class MenuPanel extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: state.listTitles.map((list) {
-                  print(list);
                   return Container(
                     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                     color:
