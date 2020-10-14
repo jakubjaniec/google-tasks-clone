@@ -27,7 +27,7 @@ Project is created with:
 
 ## :camera_flash: Screenshots
 
-<img src="assets/screenshots/ss-1.png" width="230"> <img src="assets/screenshots/ss-2.png" width="230"> <img src="assets/screenshots/ss-3.png" width="230"> <img src="assets/screenshots/ss-4.png" width="230"> <img src="assets/screenshots/ss-5.png" width="230"> <img src="assets/screenshots/ss-6.png" width="230">
+<img src="assets/screenshots/ss-1.png" width="270"> <img src="assets/screenshots/ss-2.png" width="270"> <img src="assets/screenshots/ss-3.png" width="270"> <img src="assets/screenshots/ss-4.png" width="270"> <img src="assets/screenshots/ss-5.png" width="270"> <img src="assets/screenshots/ss-6.png" width="270">
 
 ## :computer: Setup
 
