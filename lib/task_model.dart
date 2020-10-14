@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 
-import 'package:Google_Task_Clone/components/addTaskPanel.dart';
-import 'package:Google_Task_Clone/components/menuPanel.dart';
-import 'package:Google_Task_Clone/components/optionsPanel.dart';
+import 'package:Google_Task_Clone/components/add_task_panel.dart';
+import 'package:Google_Task_Clone/components/menu_panel.dart';
+import 'package:Google_Task_Clone/components/options_panel.dart';
 
 class TaskModel extends ChangeNotifier {
   final LocalStorage storage = LocalStorage('tasks');
@@ -59,6 +59,11 @@ class TaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void resetInput() {
+    taskTitle = '';
+    notifyListeners();
+  }
+
   void deleteTask(context, index) {
     _tasks.removeAt(index);
     storage.setItem('1', _tasks);
@@ -78,7 +83,11 @@ class TaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // bool isPanelOpen = false;
+
   void openAddTaskPanel(context) {
+    // isPanelOpen = !isPanelOpen;
+    notifyListeners();
     Navigator.of(context).push(PageRouteBuilder(
       opaque: false,
       pageBuilder: (_, __, ___) => AddTaskPanel(),

@@ -1,0 +1,101 @@
+import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+
+import 'package:Google_Task_Clone/task_model.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class AddTaskPanel extends StatelessWidget {
+  final PanelController _pc = PanelController();
+
+  final BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(7.5.sp), topRight: Radius.circular(7.5.sp));
+
+  void openPanel() {
+    Timer(Duration(milliseconds: 10), () {
+      _pc.open();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var state = Provider.of<TaskModel>(context, listen: true);
+    var width = MediaQuery.of(context).size.width;
+    bool isTablet = width >= 600 ? true : false;
+    openPanel();
+
+    return Scaffold(
+      backgroundColor: Colors.black.withOpacity(0),
+      body: SlidingUpPanel(
+        controller: _pc,
+        defaultPanelState: PanelState.CLOSED,
+        onPanelClosed: () {
+          state.resetInput();
+          Navigator.maybePop(context);
+        },
+        minHeight: 0,
+        maxHeight: 120.h,
+        padding: EdgeInsets.only(left: 10.0.w, right: 5.0.w),
+        backdropTapClosesPanel: true,
+        backdropEnabled: true,
+        borderRadius: radius,
+        panel: Container(
+          padding: EdgeInsets.only(top: !isTablet ? 5.h : 10.h, bottom: 5.0.h),
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: EdgeInsets.only(left: 12.0),
+                child: TextField(
+                  onChanged: (value) => state.handleInputValueChange(value),
+                  maxLines: null,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: !isTablet ? 15.sp : 14.sp,
+                  ),
+                  autofocus: false,
+                  decoration: InputDecoration(
+                      border: InputBorder.none, hintText: 'New Task'),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.sort),
+                          iconSize: !isTablet ? 25.sp : 22.sp,
+                          color: Colors.blue[600]),
+                      IconButton(
+                          onPressed: () {},
+                          padding: EdgeInsets.only(left: isTablet ? 7.5.h : 0),
+                          icon: Icon(Icons.event_available),
+                          iconSize: !isTablet ? 25.sp : 22.sp,
+                          color: Colors.blue[600])
+                    ],
+                  ),
+                  FlatButton(
+                      child: Text(
+                        'Save',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: !isTablet ? 17.sp : 15.sp),
+                      ),
+                      textColor: Colors.blue[600],
+                      disabledTextColor: Colors.grey[400],
+                      onPressed: state.taskTitle != ''
+                          ? () => state.addTask(context)
+                          : null),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
