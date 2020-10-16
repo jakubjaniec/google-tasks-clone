@@ -4,6 +4,7 @@ import 'package:localstorage/localstorage.dart';
 import 'package:Google_Task_Clone/components/add_task_panel.dart';
 import 'package:Google_Task_Clone/components/menu_panel.dart';
 import 'package:Google_Task_Clone/components/options_panel.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TaskModel extends ChangeNotifier {
   final LocalStorage storage = LocalStorage('tasks');
@@ -59,11 +60,6 @@ class TaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void resetInput() {
-    taskTitle = '';
-    notifyListeners();
-  }
-
   void deleteTask(context, index) {
     _tasks.removeAt(index);
     storage.setItem('1', _tasks);
@@ -83,11 +79,8 @@ class TaskModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // bool isPanelOpen = false;
-
   void openAddTaskPanel(context) {
-    // isPanelOpen = !isPanelOpen;
-    notifyListeners();
+    taskTitle = '';
     Navigator.of(context).push(PageRouteBuilder(
       opaque: false,
       pageBuilder: (_, __, ___) => AddTaskPanel(),
@@ -106,5 +99,20 @@ class TaskModel extends ChangeNotifier {
       opaque: false,
       pageBuilder: (_, __, ___) => OptionsPanel(),
     ));
+  }
+
+  double determineFontSize(context, double fs) {
+    var width = MediaQuery.of(context).size.width;
+    double fontSize;
+
+    if (width >= 300 && width < 400)
+      fontSize = fs.sp;
+    else if (width >= 400 && width < 500)
+      fontSize = (fs - 1).sp;
+    else if (width >= 500 && width < 600)
+      fontSize = (fs - 2).sp;
+    else if (width >= 600) fontSize = (fs - 3).sp;
+
+    return fontSize;
   }
 }

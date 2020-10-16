@@ -11,15 +11,26 @@ class Task extends StatelessWidget {
   Task(this.task, this.index);
 
   final EdgeInsets contentPaddingDetails =
-      EdgeInsets.symmetric(horizontal: 30.0.w, vertical: 5.0.h);
+      EdgeInsets.symmetric(horizontal: 30.0.h, vertical: 5.0.h);
   final EdgeInsets contentPaddingNoDetails =
-      EdgeInsets.symmetric(horizontal: 30.0.w, vertical: 0.0);
+      EdgeInsets.symmetric(horizontal: 30.0.h, vertical: 0.0);
 
   @override
   Widget build(BuildContext context) {
-    var state = Provider.of<TaskModel>(context, listen: true);
-    var width = MediaQuery.of(context).size.width;
-    var isTablet = width >= 600 ? true : false;
+    TaskModel state = Provider.of<TaskModel>(context, listen: true);
+    double width = MediaQuery.of(context).size.width;
+
+    double determineCardMargin() {
+      double cardMargin = 0.0;
+
+      if (width >= 400 && width < 600)
+        cardMargin = 7.5.h;
+      else if (width >= 600 && width < 800)
+        cardMargin = 7.5.h;
+      else if (width >= 800) cardMargin = 10.0.h;
+
+      return cardMargin;
+    }
 
     return Dismissible(
       key: Key('$index'),
@@ -28,8 +39,8 @@ class Task extends StatelessWidget {
       background: Container(color: Colors.blue[600]),
       child: Card(
         elevation: 0,
-        margin:
-            EdgeInsets.symmetric(horizontal: 0, vertical: isTablet ? 5.0.h : 0),
+        margin: EdgeInsets.symmetric(
+            horizontal: 0, vertical: determineCardMargin()),
         child: ListTile(
           contentPadding: task['details'] != ''
               ? contentPaddingDetails
@@ -49,18 +60,19 @@ class Task extends StatelessWidget {
                 child: Icon(
                   task['done'] ? Icons.check : Icons.radio_button_unchecked,
                   color: task['done'] ? Colors.blue : Colors.grey[700],
-                  size: !isTablet ? 23.sp : 20.sp,
+                  size: state.determineFontSize(context, 23.0),
                 ),
               ),
               SizedBox(
-                width: 15,
+                width: 15.w,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(task['title'].toString(),
                       style: TextStyle(
-                          fontSize: !isTablet ? 15.sp : 14.sp,
+                          fontSize: state.determineFontSize(context, 15.0),
+                          // fontSize: !isTablet ? 15.sp : 14.sp,
                           decoration:
                               task['done'] ? TextDecoration.lineThrough : null,
                           color: Colors.black,
@@ -69,7 +81,8 @@ class Task extends StatelessWidget {
                   task['details'] != ''
                       ? Text(task['details'],
                           style: TextStyle(
-                            fontSize: !isTablet ? 13.sp : 12.sp,
+                            fontSize: state.determineFontSize(context, 13.0),
+                            // fontSize: !isTablet ? 13.sp : 12.sp,
                             color: Colors.grey,
                           ))
                       : Container(),
@@ -86,7 +99,8 @@ class Task extends StatelessWidget {
 class ActiveTasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var state = Provider.of<TaskModel>(context, listen: true);
+    TaskModel state = Provider.of<TaskModel>(context, listen: true);
+
     return state.activeTasks.length > 0
         ? Column(
             children: state.activeTasks.map<Widget>((task) {
@@ -102,8 +116,8 @@ class ActiveTasksList extends StatelessWidget {
 class DoneTasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var state = Provider.of<TaskModel>(context, listen: true);
-    var width = MediaQuery.of(context).size.width;
+    TaskModel state = Provider.of<TaskModel>(context, listen: true);
+    double width = MediaQuery.of(context).size.width;
     bool isTablet = width >= 600 ? true : false;
 
     return state.doneTasks.length > 0

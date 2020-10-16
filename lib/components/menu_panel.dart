@@ -12,7 +12,7 @@ class MenuPanel extends StatelessWidget {
   final BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
 
-  void openPanel(state) {
+  void openPanel() {
     Timer(Duration(milliseconds: 1), () {
       _pc.open();
     });
@@ -20,11 +20,8 @@ class MenuPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var state = Provider.of<TaskModel>(context, listen: true);
-    var width = MediaQuery.of(context).size.width;
-    bool isTablet = width >= 600 ? true : false;
-
-    openPanel(state);
+    openPanel();
+    TaskModel state = Provider.of<TaskModel>(context, listen: true);
 
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0),
@@ -33,7 +30,7 @@ class MenuPanel extends StatelessWidget {
         defaultPanelState: PanelState.CLOSED,
         onPanelClosed: () => Navigator.maybePop(context),
         minHeight: 0,
-        maxHeight: 300.h,
+        maxHeight: MediaQuery.of(context).size.height / 2,
         backdropTapClosesPanel: true,
         backdropEnabled: true,
         borderRadius: radius,
@@ -44,7 +41,7 @@ class MenuPanel extends StatelessWidget {
               child: Row(
                 children: [
                   CircleAvatar(
-                    radius: 17.sp,
+                    radius: state.determineFontSize(context, 18),
                     backgroundColor: Colors.grey,
                   ),
                   SizedBox(width: 10.0.h),
@@ -54,12 +51,14 @@ class MenuPanel extends StatelessWidget {
                       Text('John Doe',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: !isTablet ? 15.0.sp : 14.0.sp)),
+                              fontSize: state.determineFontSize(context, 15))),
                       SizedBox(height: 5.0),
                       Row(children: [
-                        Text('johndoe@gmail.com',
-                            style: TextStyle(
-                                fontSize: !isTablet ? 11.5.sp : 11.0.sp)),
+                        Text(
+                          'johndoe@gmail.com',
+                          style: TextStyle(
+                              fontSize: state.determineFontSize(context, 11.5)),
+                        ),
                         Icon(
                           Icons.keyboard_arrow_down,
                           size: 16.sp,
@@ -87,7 +86,7 @@ class MenuPanel extends StatelessWidget {
                           color:
                               list == 'Tasks' ? Colors.blue[800] : Colors.black,
                           fontWeight: FontWeight.w700,
-                          fontSize: !isTablet ? 15.0.sp : 14.0.sp),
+                          fontSize: state.determineFontSize(context, 15)),
                     ),
                   );
                 }).toList(),
@@ -100,11 +99,11 @@ class MenuPanel extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.add, size: !isTablet ? 20.sp : 19.sp),
-                    SizedBox(width: 10.0),
+                    Icon(Icons.add, size: state.determineFontSize(context, 20)),
+                    SizedBox(width: 12.0.w),
                     Text('Create new list',
                         style: TextStyle(
-                            fontSize: !isTablet ? 15.0.sp : 14.0.sp,
+                            fontSize: state.determineFontSize(context, 15),
                             fontWeight: FontWeight.w500)),
                   ],
                 ),
@@ -116,11 +115,12 @@ class MenuPanel extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 20.0.h),
                   child: Row(
                     children: [
-                      Icon(Icons.feedback, size: 18.sp),
-                      SizedBox(width: 12.0),
+                      Icon(Icons.feedback,
+                          size: state.determineFontSize(context, 19)),
+                      SizedBox(width: 12.0.w),
                       Text('Help and feedback',
                           style: TextStyle(
-                              fontSize: !isTablet ? 15.0.sp : 14.0.sp,
+                              fontSize: state.determineFontSize(context, 15),
                               fontWeight: FontWeight.w500)),
                     ],
                   )),

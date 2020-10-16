@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:Google_Task_Clone/task_model.dart';
+import 'package:provider/provider.dart';
+
 class ListTitle extends StatelessWidget {
   final String activeList;
 
@@ -8,17 +11,16 @@ class ListTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var isTablet = width >= 600 ? true : false;
+    TaskModel state = Provider.of<TaskModel>(context, listen: true);
 
     return Row(
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(60.0.h, 15.0, 60.0, 10.0.h),
+          padding: EdgeInsets.fromLTRB(60.0.w, 15.0.h, 60.0, 15.0.h),
           child: Text(
             '$activeList',
             style: TextStyle(
-              fontSize: !isTablet ? 27.sp : 25.sp,
+              fontSize: state.determineFontSize(context, 27.0),
               fontFamily: 'Product Sans',
               fontWeight: FontWeight.w700,
             ),

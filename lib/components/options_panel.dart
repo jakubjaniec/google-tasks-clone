@@ -12,11 +12,7 @@ class OptionsPanel extends StatelessWidget {
   final BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(7.5), topRight: Radius.circular(7.5));
 
-  final TextStyle mainText =
-      TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w500);
-  final TextStyle subText = TextStyle(fontSize: 10.sp, color: Colors.grey);
-
-  void openPanel() async {
+  void openPanel() {
     Timer(Duration(milliseconds: 1), () {
       _pc.open();
     });
@@ -24,8 +20,14 @@ class OptionsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var state = Provider.of<TaskModel>(context, listen: true);
     openPanel();
+    TaskModel state = Provider.of<TaskModel>(context, listen: true);
+
+    TextStyle mainText = TextStyle(
+        fontSize: state.determineFontSize(context, 13),
+        fontWeight: FontWeight.w500);
+    TextStyle subText = TextStyle(
+        fontSize: state.determineFontSize(context, 11), color: Colors.grey);
 
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0),
@@ -34,20 +36,21 @@ class OptionsPanel extends StatelessWidget {
         defaultPanelState: PanelState.CLOSED,
         onPanelClosed: () => Navigator.maybePop(context),
         minHeight: 0,
-        maxHeight: 295.h,
+        maxHeight: MediaQuery.of(context).size.height / 1.9,
         backdropTapClosesPanel: true,
         backdropEnabled: true,
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+        padding: EdgeInsets.only(left: 20.0.w),
         borderRadius: radius,
         color: Colors.white,
         panel: Container(
+          padding: EdgeInsets.symmetric(vertical: 15.0.h),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                  // padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Sort by', style: mainText),
@@ -59,6 +62,7 @@ class OptionsPanel extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(vertical: 5.h),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(child: Text('Rename list', style: mainText)),
@@ -83,6 +87,7 @@ class OptionsPanel extends StatelessWidget {
               Container(
                   padding: EdgeInsets.symmetric(vertical: 5.h),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Theme', style: mainText),

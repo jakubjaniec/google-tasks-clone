@@ -6,9 +6,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class Details extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var state = Provider.of<TaskModel>(context, listen: true);
+    ScreenUtil.init(context, designSize: Size(320.0, 569.0));
+
     final Map args = ModalRoute.of(context).settings.arguments as Map;
     Map task = args['task'];
+
+    TaskModel state = Provider.of<TaskModel>(context, listen: true);
+    double width = MediaQuery.of(context).size.width;
+
+    double determinePadding() {
+      double padding = 0.0;
+
+      if (width >= 400 && width < 600)
+        padding = 7.5.h;
+      else if (width >= 600 && width < 800)
+        padding = 12.5.h;
+      else if (width >= 800) padding = 15.0.h;
+
+      return padding;
+    }
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -18,39 +34,47 @@ class Details extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: Colors.grey[700]),
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back),
-          iconSize: 22.h,
+        leading: Padding(
+          padding: EdgeInsets.only(left: determinePadding()),
+          child: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: Icon(Icons.arrow_back),
+            iconSize: state.determineFontSize(context, 22),
+          ),
         ),
         actions: [
           IconButton(
             onPressed: () => state.markDone(args['index'], context, 'details'),
             icon: task['done'] ? Icon(Icons.undo) : Icon(Icons.check),
-            iconSize: 22.h,
+            iconSize: state.determineFontSize(context, 22),
           ),
-          IconButton(
-            onPressed: () => state.deleteTask(context, args['index']),
-            icon: Icon(Icons.delete),
-            iconSize: 22.h,
+          Padding(
+            padding: EdgeInsets.only(
+                right: determinePadding(), left: determinePadding()),
+            child: IconButton(
+              onPressed: () => state.deleteTask(context, args['index']),
+              icon: Icon(Icons.delete),
+              iconSize: state.determineFontSize(context, 22),
+            ),
           )
         ],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 0.h),
+        padding: EdgeInsets.symmetric(
+            horizontal: 20.w, vertical: determinePadding()),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(children: [
               Text('Tasks',
                   style: TextStyle(
-                      fontSize: 14.sp,
+                      fontSize: state.determineFontSize(context, 14),
                       fontWeight: FontWeight.w700,
                       color: Colors.blue[800])),
               IconButton(
                 onPressed: () {},
                 icon: Icon(Icons.arrow_drop_down),
-                iconSize: 24.h,
+                iconSize: state.determineFontSize(context, 24),
                 color: Colors.blue[800],
               )
             ]),
@@ -71,12 +95,14 @@ class DoneTaskDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TaskModel state = Provider.of<TaskModel>(context, listen: true);
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15.0.h),
       child: Text("${task['title']}",
           style: TextStyle(
               fontWeight: FontWeight.w500,
-              fontSize: 24.sp,
+              fontSize: state.determineFontSize(context, 24),
               decoration: TextDecoration.lineThrough)),
     );
   }
@@ -90,7 +116,7 @@ class ActiveTaskDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var state = Provider.of<TaskModel>(context, listen: true);
+    TaskModel state = Provider.of<TaskModel>(context, listen: true);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +125,9 @@ class ActiveTaskDetails extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 15.0),
           child: TextFormField(
             onChanged: (value) => state.editTaskTitle(index, value),
-            style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                fontSize: state.determineFontSize(context, 24),
+                fontWeight: FontWeight.w500),
             initialValue: task['title'],
             decoration: InputDecoration(border: InputBorder.none),
           ),
@@ -130,26 +158,44 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var state = Provider.of<TaskModel>(context, listen: true);
+    var width = MediaQuery.of(context).size.width;
+
+    double determinePadding() {
+      var padding = 5.0;
+
+      if (width >= 400 && width < 600)
+        padding = 12.5.h;
+      else if (width >= 600 && width < 800)
+        padding = 17.5.h;
+      else if (width >= 800) padding = 20.0.h;
+
+      return padding;
+    }
 
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: 7.0.h),
+        padding: EdgeInsets.symmetric(vertical: determinePadding()),
         child: Row(
           children: [
-            Icon(icon, color: Colors.grey[700], size: 22.h),
+            Icon(icon,
+                color: Colors.grey[700],
+                size: state.determineFontSize(context, 22)),
             type == 'details'
                 ? Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(left: 15.0.w),
                       child: TextFormField(
                         onChanged: (value) => state.addDetails(index, value),
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(
+                            color: Colors.grey[700],
+                            fontSize: state.determineFontSize(context, 17),
+                            fontWeight: FontWeight.w500),
                         initialValue: details != '' ? '$details' : null,
                         decoration: InputDecoration(
                             hintText: '$label',
                             border: InputBorder.none,
                             hintStyle: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 17.sp,
+                                fontSize: state.determineFontSize(context, 17),
                                 color: Colors.grey[700])),
                       ),
                     ),
@@ -162,7 +208,8 @@ class Button extends StatelessWidget {
                       onPressed: () {},
                       child: Text('$label',
                           style: TextStyle(
-                              fontSize: 17.sp, fontWeight: FontWeight.w500)),
+                              fontSize: state.determineFontSize(context, 17),
+                              fontWeight: FontWeight.w500)),
                     ),
                   ),
           ],

@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var state = Provider.of<TaskModel>(context, listen: true);
+    TaskModel state = Provider.of<TaskModel>(context, listen: true);
 
     return BottomAppBar(
       elevation: 20.0,
