@@ -36,13 +36,13 @@ To run this project follow these steps:
 1. Clone the repository
 
 ```
-$ git clone https://github.com/kubacarbon/Google_Tasks_Clone.git
+$ git clone https://github.com/kubacarbon/google-tasks-clone.git
 ```
 
 2. Open the project
 
 ```
-$ cd Google_Tasks_Clone
+$ cd google-tasks-clone
 ```
 
 3. Install dependencies
