@@ -46,7 +46,7 @@ class Option extends StatelessWidget {
               )
             else
               Padding(
-                padding: EdgeInsets.only(left: size.width * 0.02),
+                padding: EdgeInsets.only(left: size.width * 0.01),
                 child: FlatButton(
                   textColor: Colors.grey[700],
                   padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),

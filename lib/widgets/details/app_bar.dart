@@ -22,7 +22,7 @@ class DetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       iconTheme: IconThemeData(color: Colors.grey[700]),
       leading: Padding(
-        padding: EdgeInsets.only(left: size.width * 0.05),
+        padding: EdgeInsets.only(left: size.width * 0.03),
         child: IconButton(
           icon: const Icon(Icons.arrow_back),
           iconSize: state.getAdaptiveTextSize(context, 22),
@@ -38,7 +38,7 @@ class DetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () => state.markDone(index, context, 'details'),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
           child: IconButton(
             icon: const Icon(Icons.delete),
             iconSize: state.getAdaptiveTextSize(context, 22),

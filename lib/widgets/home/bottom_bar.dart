@@ -55,7 +55,7 @@ class AddTaskPanelButton extends StatelessWidget {
           child: Icon(
             Icons.add,
             color: Colors.blue[600],
-            size: state.getAdaptiveTextSize(context, 28),
+            size: state.getAdaptiveTextSize(context, 34),
           ),
         ),
       ),

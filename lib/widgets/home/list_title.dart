@@ -16,11 +16,11 @@ class ListTitle extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: size.width * 0.19, vertical: size.height * 0.03),
+              horizontal: size.width * 0.17, vertical: size.height * 0.03),
           child: Text(
             activeList,
             style: TextStyle(
-              fontSize: state.getAdaptiveTextSize(context, 27),
+              fontSize: state.getAdaptiveTextSize(context, 34),
               fontFamily: 'Product Sans',
               fontWeight: FontWeight.w700,
             ),

@@ -29,13 +29,14 @@ class AddTaskPanel extends StatelessWidget {
         controller: _pc,
         onPanelClosed: () => Navigator.maybePop(context),
         minHeight: 0,
-        maxHeight: size.height * 0.18,
-        padding:
-            EdgeInsets.only(left: size.width * 0.04, right: size.width * 0.04),
+        maxHeight: size.height * 0.16,
+        padding: EdgeInsets.only(
+          left: size.width * 0.03,
+        ),
         backdropEnabled: true,
         borderRadius: radius,
         panel: Container(
-          padding: EdgeInsets.symmetric(vertical: size.height * 0.025),
+          padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
           color: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

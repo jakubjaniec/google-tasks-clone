@@ -96,6 +96,13 @@ class TaskProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // void reorderList(int oldIndex, int newIndex) {
+  //   if(newIndex > oldIndex) {
+  //     newIndex -=1;
+  //     final String newString = myC
+  //   }
+  // }
+
   double getAdaptiveTextSize(BuildContext context, double value) {
     return (value / 720) * MediaQuery.of(context).size.height;
   }

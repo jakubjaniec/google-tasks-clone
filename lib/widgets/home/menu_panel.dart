@@ -33,9 +33,9 @@ class MenuPanel extends StatelessWidget {
         backdropEnabled: true,
         borderRadius: radius,
         panel: Padding(
-          padding: EdgeInsets.symmetric(vertical: size.height * 0.03),
+          padding: EdgeInsets.only(top: size.height * 0.02),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               _UserSection(),
               Divider(color: Colors.grey[400]),

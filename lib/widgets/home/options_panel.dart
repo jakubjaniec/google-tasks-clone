@@ -18,7 +18,7 @@ class OptionsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TaskProvider state = Provider.of<TaskProvider>(context, listen: true);
+    final TaskProvider state = context.watch<TaskProvider>();
     final Size size = MediaQuery.of(context).size;
     openPanel();
 
