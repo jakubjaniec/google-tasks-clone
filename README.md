@@ -17,13 +17,13 @@ The purpose of this project was to create a good working Google Tasks clone and 
 
 Project is created with:
 
-- [Flutter](https://flutter.dev/) version: 1.20.0
-- [Dart](https://dart.dev/) version: 2.9.0
-- [Provider](https://pub.dev/packages/provider) version: 4.3.2+1
-- [Localstorage](https://pub.dev/packages/localstorage) version: 3.0.2+5
+- [Flutter](https://flutter.dev/) version: 1.22.5
+- [Dart](https://dart.dev/) version: 2.10.4
+- [Provider](https://pub.dev/packages/provider) version: 4.3.3
+- [Localstorage](https://pub.dev/packages/localstorage) version: 3.0.6+9
 - [Sliding_up_panel](https://pub.dev/packages/sliding_up_panel) version: 1.0.2
-- [Flutter_screenutil](https://pub.dev/packages/flutter_screenutil) version: 3.1.1
-- [Device_preview](https://pub.dev/packages/device_preview) version: 0.4.8
+- [Lint](https://pub.dev/packages/lint) version: 1.3.0
+- [Device_preview](https://pub.dev/packages/device_preview) version: 0.5.5
 
 ## :camera_flash: Screenshots
 
