@@ -11,7 +11,7 @@ A clone of the popular task management application written in Flutter
 
 ## :pencil: General info
 
-The purpose of this project was to create good working Google Tasks clone and to improve myself at creating mobile apps in Flutter & Dart.
+The purpose of this project was to create a good working Google Tasks clone and to improve myself at creating mobile apps in Flutter & Dart. This is a showcase app, so it doesn't provide all the functionalities as in original Google Tasks application.
 
 ## :gear: Technologies
 
@@ -36,13 +36,13 @@ To run this project follow these steps:
 1. Clone the repository
 
 ```
-$ git clone https://github.com/kubacarbon/Google_Tasks_Clone.git
+$ git clone https://github.com/kubacarbon/google-tasks-clone.git
 ```
 
 2. Open the project
 
 ```
-$ cd Google_Tasks_Clone
+$ cd google-tasks-clone
 ```
 
 3. Install dependencies
