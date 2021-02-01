@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:Google_Task_Clone/task_model.dart';
 import 'package:provider/provider.dart';
+import 'package:Google_Task_Clone/providers/task_provider.dart';
 
 class ListTitle extends StatelessWidget {
   final String activeList;
 
-  ListTitle(this.activeList);
+  const ListTitle(this.activeList);
 
   @override
   Widget build(BuildContext context) {
-    TaskModel state = Provider.of<TaskModel>(context, listen: true);
+    final TaskProvider state = context.watch<TaskProvider>();
+    final Size size = MediaQuery.of(context).size;
 
     return Row(
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(60.0.w, 15.0.h, 60.0, 15.0.h),
+          padding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.19, vertical: size.height * 0.03),
           child: Text(
-            '$activeList',
+            activeList,
             style: TextStyle(
-              fontSize: state.determineFontSize(context, 27.0),
+              fontSize: state.getAdaptiveTextSize(context, 27),
               fontFamily: 'Product Sans',
               fontWeight: FontWeight.w700,
             ),
