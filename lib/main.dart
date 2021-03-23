@@ -1,12 +1,12 @@
-import 'package:Google_Task_Clone/providers/panel_provider.dart';
+import 'package:google_tasks_clone/providers/panel_provider.dart';
 import 'package:device_preview/plugins.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as service;
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
-import 'package:Google_Task_Clone/views/home.dart';
-import 'package:Google_Task_Clone/views/details.dart';
-import 'package:Google_Task_Clone/providers/task_provider.dart';
+import 'package:google_tasks_clone/views/home.dart';
+import 'package:google_tasks_clone/views/details.dart';
+import 'package:google_tasks_clone/providers/task_provider.dart';
 import 'package:device_preview/device_preview.dart';
 
 void main() {

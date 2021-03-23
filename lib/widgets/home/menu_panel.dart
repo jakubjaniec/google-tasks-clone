@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:Google_Task_Clone/providers/task_provider.dart';
+import 'package:google_tasks_clone/providers/task_provider.dart';
 
 final PanelController _pc = PanelController();
 

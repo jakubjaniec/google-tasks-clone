@@ -1,4 +1,4 @@
-name: Google_Task_Clone
+name: google_tasks_clone
 description: A new Flutter project.
 
 publish_to: "none"
@@ -9,18 +9,18 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  cupertino_icons: ^1.0.2
+  device_preview: ^0.7.1
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.3
-  device_preview: ^0.5.5
-  localstorage: ^3.0.6+9
-  provider: ^4.3.3
+  localstorage: ^4.0.0+1
+  provider: ^5.0.0
   sliding_up_panel: ^1.0.2
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.9.0
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.7.3
   lint: ^1.3.0
 
 flutter_icons:

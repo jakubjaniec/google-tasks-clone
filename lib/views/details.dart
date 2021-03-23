@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Google_Task_Clone/providers/task_provider.dart';
-import 'package:Google_Task_Clone/widgets/details/details_widgets.dart';
+import 'package:google_tasks_clone/providers/task_provider.dart';
+import 'package:google_tasks_clone/widgets/details/details_widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   @override
@@ -13,7 +13,7 @@ class DetailsScreen extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: DetailsAppBar(task, index),
       body: Container(

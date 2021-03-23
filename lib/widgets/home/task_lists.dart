@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Google_Task_Clone/providers/task_provider.dart';
-import 'package:Google_Task_Clone/widgets/home/task.dart';
+import 'package:google_tasks_clone/providers/task_provider.dart';
+import 'package:google_tasks_clone/widgets/home/task.dart';
 
 class ActiveTasksList extends StatelessWidget {
   @override

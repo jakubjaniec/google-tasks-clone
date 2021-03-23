@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Google_Task_Clone/providers/task_provider.dart';
+import 'package:google_tasks_clone/providers/task_provider.dart';
 
 class Option extends StatelessWidget {
   final String label;
@@ -47,14 +47,19 @@ class Option extends StatelessWidget {
             else
               Padding(
                 padding: EdgeInsets.only(left: size.width * 0.01),
-                child: FlatButton(
-                  textColor: Colors.grey[700],
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                  ),
                   onPressed: () {},
-                  child: Text(label,
-                      style: TextStyle(
-                          fontSize: state.getAdaptiveTextSize(context, 17),
-                          fontWeight: FontWeight.w500)),
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: state.getAdaptiveTextSize(context, 17),
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
               ),
           ],

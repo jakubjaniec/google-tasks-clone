@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Google_Task_Clone/providers/task_provider.dart';
+import 'package:google_tasks_clone/providers/task_provider.dart';
 
 class Task extends StatelessWidget {
   final Map<String, dynamic> task;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Google_Task_Clone/providers/task_provider.dart';
-import 'package:Google_Task_Clone/widgets/details/details_widgets.dart';
+import 'package:google_tasks_clone/providers/task_provider.dart';
+import 'package:google_tasks_clone/widgets/details/details_widgets.dart';
 
 class ActiveTaskDetails extends StatelessWidget {
   final dynamic task;
